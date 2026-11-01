@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" font-family="ui-monospace, monospace">
+  <rect width="640" height="480" fill="#10131c"/>
+  <g stroke="#1c2233" stroke-width="1">
+    <line x1="0" y1="120" x2="640" y2="120"/>
+    <line x1="0" y1="240" x2="640" y2="240"/>
+    <line x1="0" y1="360" x2="640" y2="360"/>
+    <line x1="160" y1="0" x2="160" y2="480"/>
+    <line x1="320" y1="0" x2="320" y2="480"/>
+    <line x1="480" y1="0" x2="480" y2="480"/>
+  </g>
+  <path d="M0 480 L220 260 L640 480 Z" fill="#182036"/>
+  <text x="28" y="60" fill="#2f5bff" font-size="22" letter-spacing="3">ROADMAP / 2026-01</text>
+  <text x="28" y="408" fill="#eef1f7" font-size="26">МЕСТО ДЛЯ ФОТО</text>
+  <text x="28" y="440" fill="#7d8596" font-size="18">2026 /01 — замени файл на свой</text>
+  <g stroke="#2f5bff" stroke-width="2" fill="none">
+    <circle cx="576" cy="404" r="24"/>
+    <path d="M568 412 L584 396 M572 394 h14 v14"/>
+  </g>
+</svg>

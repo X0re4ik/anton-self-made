@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" font-family="ui-monospace, monospace">
+  <rect width="600" height="800" fill="#10131c"/>
+  <g stroke="#1c2233" stroke-width="1">
+    <line x1="0" y1="200" x2="600" y2="200"/>
+    <line x1="0" y1="400" x2="600" y2="400"/>
+    <line x1="0" y1="600" x2="600" y2="600"/>
+    <line x1="150" y1="0" x2="150" y2="800"/>
+    <line x1="300" y1="0" x2="300" y2="800"/>
+    <line x1="450" y1="0" x2="450" y2="800"/>
+  </g>
+  <path d="M0 800 L240 480 L600 800 Z" fill="#182036"/>
+  <g stroke="#7d8596" stroke-width="3" stroke-dasharray="8 8" fill="none">
+    <circle cx="300" cy="330" r="95"/>
+    <path d="M140 700 Q300 540 460 700"/>
+  </g>
+  <text x="36" y="64" fill="#2f5bff" font-size="22" letter-spacing="3">PORTRAIT / 01</text>
+  <text x="36" y="740" fill="#eef1f7" font-size="30">МОЧАЛОВ — АНТОН</text>
+  <text x="36" y="770" fill="#7d8596" font-size="17">замени файл public/anton.svg на своё фото</text>
+</svg>

@@ -1,0 +1,225 @@
+/* ---------------------------------------------
+   ANTON SELF-MADE — base styles
+   Мотив: технологии. ум. стиль.
+---------------------------------------------- */
+
+:root {
+  --bg: #0b0c10;
+  --panel: #10131c;
+  --ink: #eef1f7;
+  --ink-soft: #d9dfe9;
+  --muted: #98a2b6;
+  --accent: #2f5bff;
+  --accent-2: #94b0ff;
+  --line: rgba(238, 241, 247, 0.13);
+  --ink-line: rgba(238, 241, 247, 0.22);
+  --ink-muted: rgba(238, 241, 247, 0.78);
+
+  --font-display: 'Oswald', 'Arial Narrow', sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-expo: cubic-bezier(0.87, 0, 0.13, 1);
+  --gutter: clamp(1rem, 3vw, 2.5rem);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+::selection {
+  background: var(--accent);
+  color: #0b0c10;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* фон на случай оверскролла — иначе за краями страницы белый */
+  background: var(--bg);
+  /* отключаем scroll anchoring: при быстрых reveal-анимациях Chromium
+     дёргает скролл («резко перебрасывает») */
+  overflow-anchor: none;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+@supports not (overflow: clip) {
+  /* старые движки: хотя бы не даём странице растягиваться вбок */
+  body {
+    overflow-x: hidden;
+  }
+}
+
+/* скрываем нативный курсор только на точных указателях */
+@media (pointer: fine) {
+  body[data-cursor-ready] a,
+  body[data-cursor-ready] button,
+  body[data-cursor-ready] [data-hover] {
+    cursor: none;
+  }
+}
+
+::selection {
+  background: var(--accent);
+  color: #0b0c10;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+/* ---------- типографика ---------- */
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.94;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: clamp(0.66rem, 0.85vw, 0.78rem);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.mc {
+  color: var(--muted);
+}
+
+/* ---------- раскладка ---------- */
+
+.section {
+  padding: clamp(4rem, 10vw, 9rem) var(--gutter);
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.9rem;
+  margin-bottom: clamp(1.6rem, 4vw, 3rem);
+}
+
+.section-title {
+  font-size: clamp(2rem, 6.5vw, 5rem);
+}
+
+.dark {
+  background: #05060a;
+  color: var(--ink-muted);
+}
+.dark .section-head,
+.dark hr {
+  border-color: var(--ink-line);
+}
+.dark .mc {
+  color: var(--ink-muted);
+}
+.dark ::selection {
+  background: var(--accent);
+  color: #0b0c10;
+}
+
+/* ---------- reveal-анимации (v-reveal) ---------- */
+
+/* По умолчанию контент виден (нет JS / странный webview).
+   Скрытие включается классом .js, который ставит main.js. */
+
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(clamp(8px, 1.6vw, 18px));
+  transition:
+    opacity 0.55s var(--ease-out),
+    transform 0.65s var(--ease-out);
+  transition-delay: calc(var(--reveal-delay, 0) * 70ms);
+}
+
+.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.js [data-reveal]:not(.is-in) {
+  /* переход нужен и опоздавшему IO, и раннему срабатыванию */
+  will-change: opacity, transform;
+}
+
+/* построчный reveal — внутренний спан уезжает вверх */
+.mask {
+  display: block;
+  overflow: hidden;
+}
+
+.mask > .mask-in {
+  display: block;
+  transition: transform 0.9s var(--ease-expo);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+.js .mask > .mask-in {
+  transform: translateY(110%);
+}
+
+.js .is-in .mask > .mask-in,
+.js .mask.is-in > .mask-in {
+  transform: none;
+}
+
+/* слепой webview: показываем всё сразу, без анимаций */
+.js.io-dead [data-reveal],
+.js.io-dead .mask > .mask-in {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+/* ---------- улилитки ---------- */
+
+.hairline {
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  [data-reveal],
+  .mask > .mask-in {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
