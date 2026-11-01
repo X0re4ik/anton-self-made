@@ -15,6 +15,53 @@ npm run build    # продакшн-сборка → dist/
 npm run preview  # локальный просмотр сборки
 ```
 
+## Deploy (Docker + nginx)
+
+В проекте есть двухэтапный `Dockerfile`: первый этап собирает статику (Node + Vite),
+второй отдаёт её через nginx (`nginx.conf` внутри — SPA-фолбэк, gzip, кэш).
+
+### Сборка и запуск
+
+```bash
+# собрать образ (из корня проекта)
+docker build -t anton-self-made .
+
+# запустить на 80-м порту
+docker run --rm -d --name anton-self-made -p 80:80 anton-self-made
+# или на другом порту, например 8080
+docker run --rm -d --name anton-self-made -p 8080:80 anton-self-made
+```
+
+Проверка: `curl http://localhost:8080/` → `200`, любой путь
+(например `http://localhost:8080/#road`) открывает тот же сайт.
+
+Полезные команды:
+
+```bash
+docker ps                                 # что сейчас запущено
+docker stop anton-self-made               # остановить
+docker logs anton-self-made               # логи nginx
+docker image rm anton-self-made           # удалить образ
+```
+
+### Пересборка после правок
+
+```bash
+docker build -t anton-self-made . && docker run --rm -d --name anton-self-made -p 80:80 anton-self-made
+```
+
+### Раскладка на сервер (VPS)
+
+1. Залей проект на сервер (git clone или `scp -r`).
+2. Убедись, что установлены docker и docker compose (`docker --version`).
+3. Собери и запусти: `docker build -t anton-self-made . && docker run -d --name anton-self-made --restart unless-stopped -p 80:80 anton-self-made`.
+   - `--restart unless-stopped` — контейнер сам поднимется после перезагрузки сервера.
+4. Если нужен домен — проксируй nginx'ом-фронтдом (Certbot/cloudflare) на порт 80 контейнера.
+
+Открытые порты настраиваются флагом `-p <порт-снаружи>:80`; менять `nginx.conf`
+нужно только если добавляются свои правила (HTTPS, домен и т.п.).
+
+
 ## Структура
 
 ```

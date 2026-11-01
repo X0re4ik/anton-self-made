@@ -7,7 +7,6 @@ import { photo, skills } from '../data/site'
 <template>
   <section id="top" class="hero">
     <div class="hero-meta mono">
-      <span>// Личный индекс</span>
       <span class="hero-meta-right">Версия 1.1 — 2026</span>
     </div>
 
